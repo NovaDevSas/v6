@@ -1,0 +1,19 @@
+{
+    "name": "cordova-plugin-beacon",
+    "version": "1.0.0",
+    "description": "Beacon detection for Outsystems",
+    "cordova": {
+      "id": "com.entel.beaconplugin",
+      "platforms": [
+        "android",
+        "ios"
+      ]
+    },
+    "keywords": [
+      "cordova",
+      "plugin",
+      "beacon"
+    ],
+    "author": "Sebastian Quintero",
+    "license": "MIT"
+  }
