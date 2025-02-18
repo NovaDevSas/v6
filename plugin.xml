@@ -1,0 +1,25 @@
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.entel.beaconplugin"
+    version="1.0.0">
+    <name>BeaconPlugin</name>
+    <description>Beacon detection for OutSystems</description>
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+        </config-file>
+        <source-file src="src/android/BeaconPlugin.java" />
+    </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/widget">
+            <feature name="BeaconPlugin">
+                <param name="ios-package" value="BeaconPlugin" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/BeaconPlugin.m" />
+        <framework src="CoreLocation.framework" />
+    </platform>
+    <js-module src="www/BeaconPlugin.js" name="BeaconPlugin">
+        <clobbers target="navigator.beacon" />
+    </js-module>
+</plugin>
