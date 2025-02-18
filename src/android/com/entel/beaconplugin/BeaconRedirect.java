@@ -1,3 +1,5 @@
+package com.entel.beaconplugin;
+
 import com.altbeacon.beacon.Beacon;
 import com.altbeacon.beacon.BeaconConsumer;
 import com.altbeacon.beacon.BeaconManager;
