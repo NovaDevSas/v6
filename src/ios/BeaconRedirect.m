@@ -29,4 +29,10 @@
         NSLog(@"Ranged beacon: %@", result);
     }
 }
+
+- (void)isAvailable:(CDVInvokedUrlCommand *)command {
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:YES];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
 @end

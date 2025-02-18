@@ -7,5 +7,14 @@ var BeaconPlugin = {
             "startMonitoring",
             []
         );
+    },
+    isAvailable: function (successCallback, errorCallback) {
+        cordova.exec(
+            successCallback,
+            errorCallback,
+            "BeaconPlugin",
+            "isAvailable",
+            []
+        );
     }
 };
