@@ -11,7 +11,7 @@
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
-        <source-file src="src/android/com/entel/beaconplugin/BeaconRedirect.java" target-dir="src/com/entel/beaconplugin" />
+        <source-file src="src/android/com/entel/beaconplugin/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
     </platform>
 
     <platform name="ios">
