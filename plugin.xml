@@ -1,31 +1,39 @@
-<platform name="android">
-    <config-file target="AndroidManifest.xml" parent="/manifest">
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        <uses-permission android:name="android.permission.BLUETOOTH" />
-        <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-        <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
-    </config-file>
-    <!-- Agrega la dependencia de AltBeacon -->
-    <framework src="org.altbeacon:android-beacon-library:2.19" />
-    <source-file src="src/android/com/entel/beaconplugin/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
-</platform>
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="com.entel.beaconplugin" version="1.0.0">
+    <name>BeaconPlugin</name>
+    <description>Beacon detection for Outsystems</description>
+    <license>MIT</license>
+    <keywords>cordova, plugin, beacon</keywords>
 
-<platform name="ios">
-    <config-file target="config.xml" parent="/widget">
-        <feature name="BeaconPlugin">
-            <param name="ios-package" value="BeaconPlugin" />
-        </feature>
-    </config-file>
-    <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
-        <string>We need your location to detect beacons.</string>
-    </config-file>
-    <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-        <string>We need your location to detect beacons.</string>
-    </config-file>
-    <source-file src="src/ios/BeaconRedirect.m" />
-    <framework src="CoreLocation.framework" />
-</platform>
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+        </config-file>
+        <!-- Agrega la dependencia de AltBeacon -->
+        <framework src="org.altbeacon:android-beacon-library:2.19" />
+        <source-file src="src/android/com/entel/beaconplugin/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
+    </platform>
 
-<js-module src="www/BeaconRedirect.js" name="BeaconPlugin">
-    <clobbers target="navigator.beacon" />
-</js-module>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/widget">
+            <feature name="BeaconPlugin">
+                <param name="ios-package" value="BeaconPlugin" />
+            </feature>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string>We need your location to detect beacons.</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>We need your location to detect beacons.</string>
+        </config-file>
+        <source-file src="src/ios/BeaconRedirect.m" />
+        <framework src="CoreLocation.framework" />
+    </platform>
+
+    <js-module src="www/BeaconRedirect.js" name="BeaconPlugin">
+        <clobbers target="navigator.beacon" />
+    </js-module>
+</plugin>
