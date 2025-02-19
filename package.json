@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-beacon",
   "version": "1.0.0",
-  "description": "Beacon detection for Outsystems",
+  "description": "Beacon detection and redirection plugin for OutSystems",
   "cordova": {
     "id": "com.entel.beaconplugin",
     "platforms": [
@@ -12,8 +12,10 @@
   "keywords": [
     "cordova",
     "plugin",
-    "beacon"
+    "beacon",
+    "redirection",
+    "outsystems"
   ],
-  "author": "Sebastian Quintero",
+  "author": "Juan Sebastian Quintero Corredor",
   "license": "MIT"
 }

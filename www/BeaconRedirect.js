@@ -1,20 +1,10 @@
 var BeaconPlugin = {
-    startMonitoring: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "BeaconPlugin",
-            "startMonitoring",
-            []
-        );
+    startMonitoring: function(successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "BeaconPlugin", "startMonitoring", []);
     },
-    isAvailable: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "BeaconPlugin",
-            "isAvailable",
-            []
-        );
+    stopMonitoring: function(successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "BeaconPlugin", "stopMonitoring", []);
     }
 };
+
+module.exports = BeaconPlugin;

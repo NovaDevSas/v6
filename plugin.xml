@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="com.entel.beaconplugin" version="1.0.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="com.entel.beaconplugin"
+        version="1.0.0">
     <name>BeaconPlugin</name>
-    <description>Beacon detection for Outsystems</description>
+    <description>Beacon detection and redirection plugin for OutSystems</description>
     <license>MIT</license>
-    <keywords>cordova, plugin, beacon</keywords>
+    <keywords>cordova, plugin, beacon, redirection, outsystems</keywords>
 
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest">
@@ -12,9 +14,9 @@
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
-        <!-- Agrega la dependencia de AltBeacon -->
-        <framework src="org.altbeacon:android-beacon-library:2.19" />
-        <source-file src="src/android/com/entel/beaconplugin/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
+        <!-- Se incluye la dependencia de AltBeacon vía Gradle -->
+        <framework src="org.altbeacon:android-beacon-library:2.19" type="gradleReference" />
+        <source-file src="src/android/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
     </platform>
 
     <platform name="ios">
