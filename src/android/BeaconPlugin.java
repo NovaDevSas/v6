@@ -99,36 +99,36 @@ public class BeaconPlugin extends CordovaPlugin {
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-                beaconManager = BeaconManager.getInstanceForApplication(cordova.getActivity().getApplicationContext());
-                beaconManager.getBeaconParsers().clear();
-                beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_LAYOUT));
-                
-                // Updated to use the new API without BeaconConsumer
-                beaconManager.addRangeNotifier(new RangeNotifier() {
-                    @Override
-                    public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                        if (!beacons.isEmpty()) {
-                            // Se toma el primer beacon detectado
-                            Beacon beacon = beacons.iterator().next();
-                            try {
-                                JSONObject beaconData = new JSONObject();
-                                beaconData.put("uuid", beacon.getId1().toString());
-                                beaconData.put("major", beacon.getId2().toInt());
-                                beaconData.put("minor", beacon.getId3().toInt());
-                                // Se envían los datos al JavaScript
-                                PluginResult result = new PluginResult(PluginResult.Status.OK, beaconData);
-                                result.setKeepCallback(true);
-                                callbackContext.sendPluginResult(result);
-                            } catch (Exception e) {
-                                PluginResult result = new PluginResult(PluginResult.Status.ERROR, "Error: " + e.getMessage());
-                                result.setKeepCallback(true);
-                                callbackContext.sendPluginResult(result);
+                try {
+                    beaconManager = BeaconManager.getInstanceForApplication(cordova.getActivity().getApplicationContext());
+                    beaconManager.getBeaconParsers().clear();
+                    beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_LAYOUT));
+                    
+                    // Fix the RangeNotifier implementation
+                    beaconManager.addRangeNotifier(new RangeNotifier() {
+                        @Override
+                        public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                            if (beacons != null && !beacons.isEmpty()) {
+                                // Se toma el primer beacon detectado
+                                Beacon beacon = beacons.iterator().next();
+                                try {
+                                    JSONObject beaconData = new JSONObject();
+                                    beaconData.put("uuid", beacon.getId1().toString());
+                                    beaconData.put("major", beacon.getId2().toInt());
+                                    beaconData.put("minor", beacon.getId3().toInt());
+                                    // Se envían los datos al JavaScript
+                                    PluginResult result = new PluginResult(PluginResult.Status.OK, beaconData);
+                                    result.setKeepCallback(true);
+                                    callbackContext.sendPluginResult(result);
+                                } catch (Exception e) {
+                                    PluginResult result = new PluginResult(PluginResult.Status.ERROR, "Error: " + e.getMessage());
+                                    result.setKeepCallback(true);
+                                    callbackContext.sendPluginResult(result);
+                                }
                             }
                         }
-                    }
-                });
+                    });
 
-                try {
                     Region region = new Region("all-beacons", null, null, null);
                     beaconManager.startRangingBeacons(region);
                 } catch (Exception e) {

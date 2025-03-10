@@ -18,11 +18,8 @@
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
         
-        <!-- Updated AltBeacon library reference -->
-        <framework src="org.altbeacon:android-beacon-library:2.19.5" />
-        
-        <!-- Add gradle configuration to ensure proper dependency resolution -->
-        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+        <!-- Use a more explicit framework reference -->
+        <framework src="src/android/beacon-library.gradle" custom="true" type="gradleReference" />
         
         <source-file src="src/android/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
     </platform>

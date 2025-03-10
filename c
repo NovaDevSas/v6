@@ -90,7 +90,7 @@
     }
 }
 
-// Handle region entry events
+// Add region entry/exit event handlers
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         NSDictionary *regionData = @{
@@ -103,7 +103,6 @@
     }
 }
 
-// Handle region exit events
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         NSDictionary *regionData = @{

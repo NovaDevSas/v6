@@ -1,0 +1,27 @@
+repositories {
+    google()
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    // Use implementation instead of compile for newer Gradle versions
+    implementation 'org.altbeacon:android-beacon-library:2.19.5'
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+    
+    defaultConfig {
+        minSdkVersion 21
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
