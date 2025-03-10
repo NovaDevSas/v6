@@ -104,6 +104,44 @@ public class BeaconPlugin extends CordovaPlugin {
                     beaconManager.getBeaconParsers().clear();
                     beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(BEACON_LAYOUT));
                     
+                    // Add monitor notifier for region entry/exit events
+                    beaconManager.addMonitorNotifier(new MonitorNotifier() {
+                        @Override
+                        public void didEnterRegion(Region region) {
+                            try {
+                                JSONObject regionData = new JSONObject();
+                                regionData.put("event", "enter");
+                                regionData.put("identifier", region.getUniqueId());
+                                
+                                PluginResult result = new PluginResult(PluginResult.Status.OK, regionData);
+                                result.setKeepCallback(true);
+                                callbackContext.sendPluginResult(result);
+                            } catch (Exception e) {
+                                // Handle exception
+                            }
+                        }
+
+                        @Override
+                        public void didExitRegion(Region region) {
+                            try {
+                                JSONObject regionData = new JSONObject();
+                                regionData.put("event", "exit");
+                                regionData.put("identifier", region.getUniqueId());
+                                
+                                PluginResult result = new PluginResult(PluginResult.Status.OK, regionData);
+                                result.setKeepCallback(true);
+                                callbackContext.sendPluginResult(result);
+                            } catch (Exception e) {
+                                // Handle exception
+                            }
+                        }
+
+                        @Override
+                        public void didDetermineStateForRegion(int state, Region region) {
+                            // Optional: handle state changes
+                        }
+                    });
+                    
                     // Fix the RangeNotifier implementation
                     beaconManager.addRangeNotifier(new RangeNotifier() {
                         @Override
@@ -116,6 +154,9 @@ public class BeaconPlugin extends CordovaPlugin {
                                     beaconData.put("uuid", beacon.getId1().toString());
                                     beaconData.put("major", beacon.getId2().toInt());
                                     beaconData.put("minor", beacon.getId3().toInt());
+                                    beaconData.put("rssi", beacon.getRssi());
+                                    beaconData.put("proximity", getProximityString(beacon.getDistance()));
+                                    beaconData.put("accuracy", beacon.getDistance());
                                     // Se envían los datos al JavaScript
                                     PluginResult result = new PluginResult(PluginResult.Status.OK, beaconData);
                                     result.setKeepCallback(true);
@@ -131,6 +172,7 @@ public class BeaconPlugin extends CordovaPlugin {
 
                     Region region = new Region("all-beacons", null, null, null);
                     beaconManager.startRangingBeacons(region);
+                    beaconManager.startMonitoring(region);
                 } catch (Exception e) {
                     callbackContext.error("Error starting ranging: " + e.getMessage());
                 }
@@ -138,11 +180,19 @@ public class BeaconPlugin extends CordovaPlugin {
         });
     }
 
+    // Helper method to convert distance to proximity string (like iOS)
+    private String getProximityString(double distance) {
+        if (distance < 0.5) return "immediate";
+        else if (distance < 3.0) return "near";
+        else return "far";
+    }
+
     private void stopMonitoring() {
         if (beaconManager != null) {
             try {
                 Region region = new Region("all-beacons", null, null, null);
                 beaconManager.stopRangingBeacons(region);
+                beaconManager.stopMonitoring(region);
             } catch (Exception e) {
                 // Handle any exceptions
             }

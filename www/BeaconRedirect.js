@@ -1,6 +1,6 @@
 var BeaconPlugin = {
-    startMonitoring: function(successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "BeaconPlugin", "startMonitoring", []);
+    startMonitoring: function(uuid, successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "BeaconPlugin", "startMonitoring", [uuid || ""]);
     },
     stopMonitoring: function(successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, "BeaconPlugin", "stopMonitoring", []);
