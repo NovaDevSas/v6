@@ -16,6 +16,7 @@
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     
+    // Request appropriate authorization based on iOS version
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
     }
@@ -25,7 +26,10 @@
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"all-beacons"];
     self.beaconRegion.notifyEntryStateOnDisplay = YES;
     
-    [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+    // Start monitoring after a short delay to ensure permissions are processed
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+    });
 }
 
 - (void)stopMonitoring:(CDVInvokedUrlCommand *)command {
@@ -34,6 +38,21 @@
     }
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Monitoring stopped"];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+// Handle authorization status changes
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedAlways || 
+        status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        // Start ranging if authorized
+        [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+    } else if (status == kCLAuthorizationStatusDenied || 
+               status == kCLAuthorizationStatusRestricted) {
+        // Send error if permissions denied
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR 
+                                                    messageAsString:@"Location permission denied"];
+        [self.commandDelegate sendPluginResult:result callbackId:self.callbackCommand.callbackId];
+    }
 }
 
 // Método del delegate que se ejecuta al detectar beacons

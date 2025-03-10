@@ -10,12 +10,15 @@
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
             <uses-permission android:name="android.permission.BLUETOOTH" />
             <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+            <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
         <!-- Se incluye la dependencia de AltBeacon vía Gradle -->
-        <framework src="org.altbeacon:android-beacon-library:2.19" type="gradleReference" />
+        <framework src="org.altbeacon:android-beacon-library:2.19.5" type="gradleReference" />
         <source-file src="src/android/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
     </platform>
 
@@ -31,7 +34,7 @@
         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string>We need your location to detect beacons.</string>
         </config-file>
-        <source-file src="src/ios/BeaconRedirect.m" />
+        <source-file src="src/ios/BeaconPlugin.m" />
         <framework src="CoreLocation.framework" />
     </platform>
 
