@@ -3,10 +3,11 @@ repositories {
     mavenCentral()
     jcenter()
     maven { url "https://jitpack.io" }
+    maven { url "https://maven.google.com" }
 }
 
 dependencies {
-    // Use implementation instead of compile for newer Gradle versions
+    // Explicitly specify the AltBeacon library
     implementation 'org.altbeacon:android-beacon-library:2.19.5'
 }
 

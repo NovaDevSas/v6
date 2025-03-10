@@ -19,6 +19,7 @@
   "author": "Juan Sebastian Quintero Corredor",
   "license": "MIT",
   "dependencies": {
-    "cordova-plugin-add-swift-support": "^2.0.2"
+    "cordova-plugin-add-swift-support": "^2.0.2",
+    "@altbeacon/android-beacon-library": "^2.19.5"
   }
 }
