@@ -17,5 +17,8 @@
     "outsystems"
   ],
   "author": "Juan Sebastian Quintero Corredor",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "cordova-plugin-add-swift-support": "^2.0.2"
+  }
 }

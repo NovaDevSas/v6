@@ -18,7 +18,7 @@
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
         
-        <!-- Use a more explicit framework reference -->
+        <!-- Use only one Gradle reference -->
         <framework src="src/android/beacon-library.gradle" custom="true" type="gradleReference" />
         
         <source-file src="src/android/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
