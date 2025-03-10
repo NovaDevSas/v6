@@ -17,8 +17,13 @@
             <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
             <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
         </config-file>
-        <!-- Se incluye la dependencia de AltBeacon vía Gradle -->
-        <framework src="org.altbeacon:android-beacon-library:2.19.5" type="gradleReference" />
+        
+        <!-- Updated AltBeacon library reference -->
+        <framework src="org.altbeacon:android-beacon-library:2.19.5" />
+        
+        <!-- Add gradle configuration to ensure proper dependency resolution -->
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+        
         <source-file src="src/android/BeaconPlugin.java" target-dir="src/com/entel/beaconplugin" />
     </platform>
 
@@ -33,6 +38,9 @@
         </config-file>
         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string>We need your location to detect beacons.</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+            <string>We need Bluetooth to detect nearby beacons.</string>
         </config-file>
         <source-file src="src/ios/BeaconPlugin.m" />
         <framework src="CoreLocation.framework" />
